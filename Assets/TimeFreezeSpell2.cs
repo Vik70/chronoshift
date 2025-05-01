@@ -8,6 +8,8 @@ public class TimeFreezeSpell2 : MonoBehaviour
     public int maxCharges = 3;            // Total number of freeze charges available
     private int currentCharges;           // Charges remaining
 
+    public UIFreezeTracker freezeTracker;
+
     // A list for storing selected freezable objects.
     // When an object is selected via a click, one charge is used.
     private List<TimeFreezable> selectedFreezables = new List<TimeFreezable>();
@@ -57,10 +59,16 @@ public class TimeFreezeSpell2 : MonoBehaviour
             if (selectedFreezables.Count > 0)
             {
                 FreezeSelectedObjects();
+                UpdateTrackerIcons();                // Updates the UI icons
+                freezeTracker.RefreshAllStatuses(); // Updates cyan/white status
+
             }
             else if(frozenFreezables.Count > 0)
             {
                 UnfreezeSelectedObjects();
+                UpdateTrackerIcons();                // Updates the UI icons
+                freezeTracker.RefreshAllStatuses(); // Updates cyan/white status
+
             }
             else
             {
@@ -88,6 +96,7 @@ public class TimeFreezeSpell2 : MonoBehaviour
                     // Check if we have any charges left.
                     if (currentCharges > 0)
                     {
+
                         // Consume one charge by marking the object.
                         freezable.CastFreezeSpell();  // This method should change its color (e.g., to cyan).
                         selectedFreezables.Add(freezable);
@@ -95,6 +104,8 @@ public class TimeFreezeSpell2 : MonoBehaviour
                         audioSource.PlayOneShot(clickSound);
                         Debug.Log($"Selected object: {hit.collider.name}. Freeze charge used. {currentCharges} charge(s) remaining.");
                         UpdateChargeUI();
+                        UpdateTrackerIcons();
+
                     }
                     else
                     {
@@ -141,16 +152,18 @@ public class TimeFreezeSpell2 : MonoBehaviour
 
     void UnfreezeSelectedObjects()
     {
-        // NOTE: rename this to UnfreezeFrozenObjects for clarity,
-        // but keeping your name here:
         foreach (var obj in frozenFreezables)
             obj.Unfreeze();
 
         frozenFreezables.Clear();
         audioSource.PlayOneShot(unfreezeSound);
 
+        UpdateTrackerIcons();                // NEW
+        freezeTracker.RefreshAllStatuses();  // NEW
+
         Debug.Log("All frozen objects have been unfrozen.");
     }
+
 
 
     private void UpdateChargeUI()
@@ -158,4 +171,14 @@ public class TimeFreezeSpell2 : MonoBehaviour
         if (chargesUIText != null)
             chargesUIText.text = $"Freeze Charges: {currentCharges}/{maxCharges}";
     }
+
+    void UpdateTrackerIcons()
+    {
+        HashSet<TimeFreezable> all = new(selectedFreezables);
+        foreach (var f in frozenFreezables)
+            all.Add(f);
+
+        freezeTracker.SetTrackedObjects(new List<TimeFreezable>(all));
+    }
+
 }

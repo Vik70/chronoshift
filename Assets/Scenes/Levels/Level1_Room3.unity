@@ -85234,6 +85234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxCharges: 3
+  freezeTracker: {fileID: 0}
   chargesUIText: {fileID: 0}
   clickSound: {fileID: 8300000, guid: f6e68cf03548f604bb7aece362faac7d, type: 3}
   freezeSound: {fileID: 8300000, guid: 18b07fa9d089c1b48b5eb8413c2be286, type: 3}

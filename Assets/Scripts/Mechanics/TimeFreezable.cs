@@ -118,5 +118,10 @@ public class TimeFreezable : MonoBehaviour
         }
     }
 
+    public bool IsFrozen()
+    {
+        return isFrozen;
+    }
+
 
 }
