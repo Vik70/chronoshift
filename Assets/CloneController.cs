@@ -12,6 +12,8 @@ public class CloneController : MonoBehaviour
 
     private TouchingDirections touchingDirections;
 
+    public bool isControlled = false;
+
 
     public TemporalCloneHandler handler;
 

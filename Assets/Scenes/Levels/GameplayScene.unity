@@ -110319,7 +110319,7 @@ PrefabInstance:
       objectReference: {fileID: 1121480193}
     - target: {fileID: 7737180761784798535, guid: 17f7e0cebf0099348ae330ebebfa3af9, type: 3}
       propertyPath: nextSceneName
-      value: Level1_Room2
+      value: Looped
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private TemporalCloneHandler cloneHandler;
     private bool touchingFrozenClone = false;
 
+    public bool isControlled = true; // Player starts controlled
+
 
 
 
@@ -114,6 +116,9 @@ public class PlayerController : MonoBehaviour
 
             FindObjectOfType<DeathManager>().HandleDeath();
         }
+
+        if (!isControlled) return; // Prevent input if not controlled
+
     }
 
     private void FixedUpdate()

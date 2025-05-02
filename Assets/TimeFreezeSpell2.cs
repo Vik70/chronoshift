@@ -5,10 +5,10 @@ using UnityEngine.UI;
 public class TimeFreezeSpell2 : MonoBehaviour
 {
     [Header("Freeze Charge Settings")]
-    public int maxCharges = 3;            // Total number of freeze charges available
-    private int currentCharges;           // Charges remaining
+    public int maxCharges = 3;           
+    private int currentCharges;           
 
-    public UIFreezeTracker freezeTracker;
+   
 
     // A list for storing selected freezable objects.
     // When an object is selected via a click, one charge is used.
@@ -59,16 +59,11 @@ public class TimeFreezeSpell2 : MonoBehaviour
             if (selectedFreezables.Count > 0)
             {
                 FreezeSelectedObjects();
-                UpdateTrackerIcons();                // Updates the UI icons
-                freezeTracker.RefreshAllStatuses(); // Updates cyan/white status
-
+   
             }
             else if(frozenFreezables.Count > 0)
             {
                 UnfreezeSelectedObjects();
-                UpdateTrackerIcons();                // Updates the UI icons
-                freezeTracker.RefreshAllStatuses(); // Updates cyan/white status
-
             }
             else
             {
@@ -104,7 +99,7 @@ public class TimeFreezeSpell2 : MonoBehaviour
                         audioSource.PlayOneShot(clickSound);
                         Debug.Log($"Selected object: {hit.collider.name}. Freeze charge used. {currentCharges} charge(s) remaining.");
                         UpdateChargeUI();
-                        UpdateTrackerIcons();
+                      
 
                     }
                     else
@@ -158,9 +153,6 @@ public class TimeFreezeSpell2 : MonoBehaviour
         frozenFreezables.Clear();
         audioSource.PlayOneShot(unfreezeSound);
 
-        UpdateTrackerIcons();                // NEW
-        freezeTracker.RefreshAllStatuses();  // NEW
-
         Debug.Log("All frozen objects have been unfrozen.");
     }
 
@@ -172,13 +164,6 @@ public class TimeFreezeSpell2 : MonoBehaviour
             chargesUIText.text = $"Freeze Charges: {currentCharges}/{maxCharges}";
     }
 
-    void UpdateTrackerIcons()
-    {
-        HashSet<TimeFreezable> all = new(selectedFreezables);
-        foreach (var f in frozenFreezables)
-            all.Add(f);
-
-        freezeTracker.SetTrackedObjects(new List<TimeFreezable>(all));
-    }
+   
 
 }
